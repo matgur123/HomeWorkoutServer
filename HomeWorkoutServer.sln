@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31410.357
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeWorkoutServer", "HomeWorkoutServer\HomeWorkoutServer.csproj", "{2A5290C4-28CA-401F-A3CB-66B5A9E8703C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeWorkoutBL", "HomeWorkoutBL\HomeWorkoutBL.csproj", "{340447ED-0C3F-4379-B7A9-5628B251303A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2A5290C4-28CA-401F-A3CB-66B5A9E8703C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A5290C4-28CA-401F-A3CB-66B5A9E8703C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A5290C4-28CA-401F-A3CB-66B5A9E8703C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A5290C4-28CA-401F-A3CB-66B5A9E8703C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{340447ED-0C3F-4379-B7A9-5628B251303A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{340447ED-0C3F-4379-B7A9-5628B251303A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{340447ED-0C3F-4379-B7A9-5628B251303A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{340447ED-0C3F-4379-B7A9-5628B251303A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {69C12A49-9899-4B50-8D7E-F42B9ADF7128}
+	EndGlobalSection
+EndGlobal
