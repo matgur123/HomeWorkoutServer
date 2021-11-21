@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace HomeWorkoutBL.Models
 {
-    public partial class WorkoutDBContext : DbContext
+    public partial class HomeWorkoutContext : DbContext
     {
-        public WorkoutDBContext()
+        public HomeWorkoutContext()
         {
         }
 
-        public WorkoutDBContext(DbContextOptions<WorkoutDBContext> options)
+        public HomeWorkoutContext(DbContextOptions<HomeWorkoutContext> options)
             : base(options)
         {
         }
@@ -32,7 +32,7 @@ namespace HomeWorkoutBL.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=localhost\\sqlexpress;Database=WorkoutDB;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Server=localhost\\sqlexpress;Database=HomeWorkout;Trusted_Connection=True;");
             }
         }
 
@@ -54,29 +54,29 @@ namespace HomeWorkoutBL.Models
                     .HasMaxLength(255)
                     .HasColumnName("exercisesDescri");
 
-                entity.Property(e => e.ExercisesDifficulty).HasColumnName("exercisesDifficulty");
+                entity.Property(e => e.ExercisesDifficultyId).HasColumnName("exercisesDifficultyID");
 
                 entity.Property(e => e.ExercisesName)
                     .IsRequired()
                     .HasMaxLength(255)
                     .HasColumnName("exercisesName");
 
-                entity.Property(e => e.ExercisesType).HasColumnName("exercisesType");
+                entity.Property(e => e.ExercisesTypeId).HasColumnName("exercisesTypeID");
 
                 entity.Property(e => e.ExercisesVideo)
                     .IsRequired()
                     .HasMaxLength(255)
                     .HasColumnName("exercisesVideo");
 
-                entity.HasOne(d => d.ExercisesDifficultyNavigation)
+                entity.HasOne(d => d.ExercisesDifficulty)
                     .WithMany(p => p.Exercises)
-                    .HasForeignKey(d => d.ExercisesDifficulty)
+                    .HasForeignKey(d => d.ExercisesDifficultyId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("exercises_exercisesdifficulty_foreign");
 
-                entity.HasOne(d => d.ExercisesTypeNavigation)
+                entity.HasOne(d => d.ExercisesType)
                     .WithMany(p => p.Exercises)
-                    .HasForeignKey(d => d.ExercisesType)
+                    .HasForeignKey(d => d.ExercisesTypeId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("exercises_exercisestype_foreign");
             });
@@ -138,25 +138,26 @@ namespace HomeWorkoutBL.Models
 
             modelBuilder.Entity<TournamentUser>(entity =>
             {
-                entity.HasKey(e => e.TournamentId)
+                entity.HasKey(e => new { e.TournamentId, e.Userid })
                     .HasName("tournamentusers_tournamentid_primary");
 
-                entity.Property(e => e.TournamentId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("tournamentID");
+                entity.Property(e => e.TournamentId).HasColumnName("tournamentID");
 
                 entity.Property(e => e.Userid).HasColumnName("userid");
             });
 
             modelBuilder.Entity<User>(entity =>
             {
-                entity.HasIndex(e => e.Email, "UQ__Users__AB6E61644F795745")
-                    .IsUnique();
+                entity.ToTable("User");
 
-                entity.HasIndex(e => e.Username, "UQ__Users__F3DBC5721C6F14A1")
-                    .IsUnique();
+                entity.Property(e => e.UserId)
+                    .ValueGeneratedNever()
+                    .HasColumnName("userID");
 
-                entity.Property(e => e.UserId).HasColumnName("userID");
+                entity.Property(e => e.Address)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .HasColumnName("address");
 
                 entity.Property(e => e.BirthDate).HasColumnName("birthDate");
 
@@ -175,12 +176,7 @@ namespace HomeWorkoutBL.Models
                 entity.Property(e => e.ProfilePic)
                     .IsRequired()
                     .HasMaxLength(255)
-                    .HasColumnName("profilePic")
-                    .HasDefaultValueSql("('default_pfp.jpg')");
-
-                entity.Property(e => e.UserAddress)
-                    .HasMaxLength(255)
-                    .HasColumnName("userAddress");
+                    .HasColumnName("profilePic");
 
                 entity.Property(e => e.Username)
                     .IsRequired()
@@ -211,16 +207,12 @@ namespace HomeWorkoutBL.Models
 
             modelBuilder.Entity<WorkoutExercise>(entity =>
             {
-                entity.HasKey(e => e.WorkoutId)
+                entity.HasKey(e => new { e.WorkoutId, e.ExercisesId })
                     .HasName("workoutexercises_workoutid_primary");
 
-                entity.Property(e => e.WorkoutId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("workoutID");
+                entity.Property(e => e.WorkoutId).HasColumnName("workoutID");
 
-                entity.Property(e => e.ExercisesId)
-                    .ValueGeneratedOnAdd()
-                    .HasColumnName("ExercisesID");
+                entity.Property(e => e.ExercisesId).HasColumnName("ExercisesID");
 
                 entity.Property(e => e.NumOfReps).HasColumnName("numOfReps");
 
@@ -229,18 +221,24 @@ namespace HomeWorkoutBL.Models
 
             modelBuilder.Entity<WorkoutPoint>(entity =>
             {
-                entity.HasKey(e => e.PointsUserId)
+                entity.HasKey(e => new { e.WorkoutPointsId, e.PointsId })
                     .HasName("workoutpoints_workoutpointsid_primary");
 
-                entity.Property(e => e.PointsUserId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("PointsUserID");
+                entity.Property(e => e.WorkoutPointsId).HasColumnName("WorkoutPointsID");
+
+                entity.Property(e => e.PointsId).HasColumnName("pointsID");
 
                 entity.Property(e => e.DateAndTime).HasColumnName("dateAndTime");
 
                 entity.Property(e => e.PointsGathered).HasColumnName("pointsGathered");
 
-                entity.Property(e => e.PointsId).HasColumnName("pointsID");
+                entity.Property(e => e.UserId).HasColumnName("userID");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.WorkoutPoints)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("workoutpoints_userid_foreign");
             });
 
             OnModelCreatingPartial(modelBuilder);

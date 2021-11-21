@@ -34,10 +34,10 @@ namespace HomeWorkoutServer
 
             //The following set the connection string to the DB and DB context!
             #region Add DB Context Support
-            string connectionString = this.Configuration.GetConnectionString("WorkoutDB");
+            //string connectionString = this.Configuration.GetConnectionString("WorkoutDB");
 
-            services.AddDbContext<WorkoutDBContext>(options => options
-                                                                .UseSqlServer(connectionString));
+            //services.AddDbContext<WorkoutDBContext>(options => options
+            //                                                    .UseSqlServer(connectionString));
             //.UseLazyLoadingProxies());
             #endregion
         }
@@ -57,16 +57,13 @@ namespace HomeWorkoutServer
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseStaticFiles(); //Added to have the wwwroot folder and server to accept calls to static files
             app.UseRouting();
-            app.UseStaticFiles();
-            app.UseSession();
+            app.UseSession(); //Added to tell the server to use sessions!
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("Hello World!");
-                });
             });
         }
     }
