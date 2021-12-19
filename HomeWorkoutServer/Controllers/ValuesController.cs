@@ -8,9 +8,9 @@ using HomeWorkoutBL.Models;
 namespace HomeWorkoutServer.Controllers
 {
 
-    [Route("ContactsAPI")]
+    [Route("HomeWorkoutAPI")]
     [ApiController]
-    public class ContactsController : ControllerBase
+    public class ContactsController : ControllerBase 
     {
         #region Add connection to the db context using dependency injection;
         //WorkoutDBContext context;
